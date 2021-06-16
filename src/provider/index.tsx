@@ -1,13 +1,13 @@
 import React, { useEffect, createContext, useMemo, useContext } from 'react';
 
-interface ThemeContextProps {
+export interface ThemeContextProps {
     theme: string;
-    styles: Record<string, Record<string, React.ReactText>>;
+    style: Record<string, React.ReactText>;
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
     theme: 'default',
-    styles: {},
+    style: {},
 });
 
 interface Props {
@@ -18,24 +18,26 @@ interface Props {
 }
 
 export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaultTheme }) => {
+    const themeStyle = useMemo(() => {
+        return { ...(styles[theme] || {}), ...(defaultTheme ? styles[defaultTheme] || {} : {}) };
+    }, [styles, theme, defaultTheme]);
+
     const value = useMemo<ThemeContextProps>(() => {
         return {
             theme,
-            styles,
+            style: themeStyle,
         };
-    }, [theme, styles]);
+    }, [theme, themeStyle]);
 
     useEffect(() => {
         if (document) {
-            const themeStyle = { ...(styles[theme] || {}), ...(defaultTheme ? styles[defaultTheme] || {} : {}) };
             const styleNames = Object.keys(themeStyle);
-
             for (const styleName of styleNames) {
                 const styleValue = themeStyle[styleName];
                 document.documentElement.style.setProperty(`--${styleName}`, `${styleValue}`);
             }
         }
-    }, [theme, defaultTheme, styles]);
+    }, [theme, defaultTheme, styles, themeStyle]);
 
     return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };
