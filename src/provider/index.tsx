@@ -2,7 +2,7 @@ import React, { useEffect, createContext, useMemo, useContext } from 'react';
 
 export interface ThemeContextProps {
     theme: string;
-    style: Record<string, React.ReactText>;
+    style: Record<string, string>;
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
@@ -12,7 +12,7 @@ const ThemeContext = createContext<ThemeContextProps>({
 
 interface Props {
     theme: string;
-    styles: Record<string, Record<string, React.ReactText>>;
+    styles: Record<string, Record<string, string>>;
     children: React.ReactNode;
     defaultTheme?: string;
 }
@@ -34,7 +34,7 @@ export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaul
             const styleNames = Object.keys(themeStyle);
             for (const styleName of styleNames) {
                 const styleValue = themeStyle[styleName];
-                document.documentElement.style.setProperty(`--${styleName}`, `${styleValue}`);
+                document.documentElement.style.setProperty(`--${styleName}`, styleValue);
             }
         }
     }, [theme, defaultTheme, styles, themeStyle]);
