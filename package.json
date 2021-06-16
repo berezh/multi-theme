@@ -1,6 +1,6 @@
 {
     "name": "multi-theme",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Path builder",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
@@ -48,12 +48,13 @@
         "url": "git+https://github.com/berezh/multi-theme.git"
     },
     "keywords": [
+        "theme",
+        "multi-theme",
         "react",
-        "page path",
-        "router",
-        "route",
-        "path",
-        "path builder"
+        "typescript",
+        "css",
+        "custom-property",
+        "custom-variable"
     ],
     "author": "Vadym Poberezhnyi",
     "license": "MIT",
