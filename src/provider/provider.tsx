@@ -1,8 +1,8 @@
 import React, { useEffect, createContext, useMemo, useContext } from 'react';
 
-type ThemeStyles = { [theme: string]: { [style: string]: React.ReactText } };
+export type ThemeStyles<TStyleValues = { [style: string]: React.ReactText }> = { [theme: string]: TStyleValues };
 
-export interface ThemeContextProps {
+interface ThemeContextProps {
     theme: string;
     styles: ThemeStyles;
 }
