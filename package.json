@@ -10,7 +10,6 @@
         "@types/react": "^17.0.11",
         "@typescript-eslint/eslint-plugin": "^4.26.0",
         "@typescript-eslint/parser": "^4.26.0",
-        "concurrently": "^4.1.1",
         "eslint": "^7.27.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-config-varp": "0.0.11",
@@ -65,7 +64,5 @@
     "files": [
         "dist"
     ],
-    "dependencies": {
-        "query-string": "^6.13.8"
-    }
+    "dependencies": {}
 }
