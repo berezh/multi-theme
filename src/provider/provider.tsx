@@ -1,10 +1,10 @@
 import React, { useEffect, createContext, useMemo, useContext } from 'react';
 
-type MultiThemeStyles = { [theme: string]: { [style: string]: React.ReactText } };
+type ThemeStyles = { [theme: string]: { [style: string]: React.ReactText } };
 
 export interface ThemeContextProps {
     theme: string;
-    styles: MultiThemeStyles;
+    styles: ThemeStyles;
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
@@ -14,11 +14,12 @@ const ThemeContext = createContext<ThemeContextProps>({
 
 interface Props {
     theme: string;
-    styles: MultiThemeStyles;
+    styles: ThemeStyles;
     children: React.ReactNode;
+    defaultTheme: string;
 }
 
-export const ThemeProvider: React.FC<Props> = ({ theme, styles, children }) => {
+export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaultTheme }) => {
     const value = useMemo<ThemeContextProps>(() => {
         return {
             theme,
@@ -28,13 +29,15 @@ export const ThemeProvider: React.FC<Props> = ({ theme, styles, children }) => {
 
     useEffect(() => {
         if (document) {
-            const themeStyles = styles[theme] || {};
-            Object.keys(themeStyles).map((style) => {
-                const value = themeStyles[style];
-                document.documentElement.style.setProperty(`--${style}`, `${value}`);
-            });
+            const themeStyle = { ...(styles[theme] || {}), ...(styles[defaultTheme] || {}) };
+            const styleNames = Object.keys(themeStyle);
+
+            for (const styleName of styleNames) {
+                const styleValue = themeStyle[styleName];
+                document.documentElement.style.setProperty(`--${styleName}`, `${styleValue}`);
+            }
         }
-    }, [theme, styles]);
+    }, [theme, defaultTheme, styles]);
 
     return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };
