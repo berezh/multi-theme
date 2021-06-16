@@ -53,8 +53,8 @@
         "react",
         "typescript",
         "css",
-        "custom-property",
-        "custom-variable"
+        "custom property",
+        "custom variable"
     ],
     "author": "Vadym Poberezhnyi",
     "license": "MIT",
