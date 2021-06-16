@@ -1,10 +1,8 @@
 import React, { useEffect, createContext, useMemo, useContext } from 'react';
 
-export type ThemeStyles<TStyleValues = { [style: string]: React.ReactText }> = { [theme: string]: TStyleValues };
-
 interface ThemeContextProps {
     theme: string;
-    styles: ThemeStyles;
+    styles: Record<string, Record<string, React.ReactText>>;
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
@@ -14,9 +12,9 @@ const ThemeContext = createContext<ThemeContextProps>({
 
 interface Props {
     theme: string;
-    styles: ThemeStyles;
+    styles: Record<string, Record<string, React.ReactText>>;
     children: React.ReactNode;
-    defaultTheme: string;
+    defaultTheme?: string;
 }
 
 export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaultTheme }) => {
@@ -29,7 +27,7 @@ export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaul
 
     useEffect(() => {
         if (document) {
-            const themeStyle = { ...(styles[theme] || {}), ...(styles[defaultTheme] || {}) };
+            const themeStyle = { ...(styles[theme] || {}), ...(defaultTheme ? styles[defaultTheme] || {} : {}) };
             const styleNames = Object.keys(themeStyle);
 
             for (const styleName of styleNames) {
