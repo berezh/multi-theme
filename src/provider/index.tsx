@@ -14,10 +14,11 @@ interface Props {
     theme: string;
     styles: Record<string, Record<string, string>>;
     children: React.ReactNode;
+    elementRef?: React.RefObject<HTMLElement>;
     defaultTheme?: string;
 }
 
-export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaultTheme }) => {
+export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaultTheme, elementRef }) => {
     const themeStyle = useMemo(() => {
         return { ...(styles[theme] || {}), ...(defaultTheme ? styles[defaultTheme] || {} : {}) };
     }, [styles, theme, defaultTheme]);
@@ -30,14 +31,19 @@ export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaul
     }, [theme, themeStyle]);
 
     useEffect(() => {
-        if (document) {
+        const elementStyle: CSSStyleDeclaration | undefined = elementRef
+            ? elementRef?.current?.style
+            : document?.documentElement?.style;
+
+        if (elementStyle) {
             const styleNames = Object.keys(themeStyle);
             for (const styleName of styleNames) {
                 const styleValue = themeStyle[styleName];
-                document.documentElement.style.setProperty(`--${styleName}`, styleValue);
+
+                elementStyle.setProperty(`--${styleName}`, styleValue);
             }
         }
-    }, [theme, defaultTheme, styles, themeStyle]);
+    }, [themeStyle, elementRef]);
 
     return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

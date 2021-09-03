@@ -4,22 +4,33 @@
     <img src="https://nodei.co/npm/multi-theme.png?mini=true"/>
 </a>
 
+Multi theme support based on [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
 
-Multi theme support for react based on [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-
-[Demo](https://varp.com/multi-theme)
+[DEMO](https://varp.com/multi-theme)
 
 ---
 
-## ThemeProvider
-
-Installation
+## install
 
 ```tsx
+npm i multi-theme
+```
+
+## Glossary
+
+- [Usage](#Usage)
+- [ThemeProvider](#ThemeProvider) 
+- [useTheme](#useTheme)
+## Usage
+
+```js
+/* 1. Set up provider */
+
 import { ThemeProvider } from 'multi-theme';
 
 ...
 
+/* 2. Define all styles container */
 const styles = {
     light: {
         fontColor: '#000000', // => '--fontColor'
@@ -31,37 +42,45 @@ const styles = {
     }
 }
 
+/* 3. Set up locale name */
 <ThemeProvider theme="light" styles={styles}>
 /* App */
 </ThemeProvider>
 
 ```
 
-Use [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) in your styles
-
 ```scss
+/* 4. Define styles using CSS Custom Properties. Names should be equal to container's properties */
 .container {
     color: var(--fontColor);
     background-color: var(--backgroundColor);
 }
 ```
 
-```tsx
-<div className="container">
-    Multi Theme
-</div>
-```
+## ThemeProvider
 
+Provider to wrap the application or specific element
+
+| Name           | Description                                                                                                            |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `theme`        | Theme name                                                                                                             |
+| `defaultTheme` | Default theme name, means that if current theme does not have a value for specific style the default one will be used. |
+| `styles`       | Theme style container                                                                                                  |
+| `elementRef`   | Reference to element where provider will be applied                                                                    |
 
 ## useTheme
 
-Use `useTheme` react hook for getting current theme values
-
+Hook to access theme context properties.
 
 ```tsx
 import { useTheme } from 'multi-theme';
 
 ...
 
-const { theme } = useTheme();
+const { theme, style } = useTheme();
 ```
+
+| Name    | Description        |
+| ------- | ------------------ |
+| `theme` | Current theme name |
+| `style` | Curent style set   |
