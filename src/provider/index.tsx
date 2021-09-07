@@ -39,9 +39,12 @@ export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaul
             const styleNames = Object.keys(themeStyle);
             for (const styleName of styleNames) {
                 const styleValue = themeStyle[styleName];
+                const propertyName = `--${styleName}`;
 
                 if (typeof styleValue === 'string' || typeof styleValue === 'number') {
-                    elementStyle.setProperty(`--${styleName}`, styleValue);
+                    elementStyle.setProperty(propertyName, styleValue);
+                } else {
+                    elementStyle.removeProperty(propertyName);
                 }
             }
         }
