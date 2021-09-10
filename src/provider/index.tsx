@@ -1,8 +1,8 @@
 import React, { useEffect, createContext, useMemo, useContext } from 'react';
 
-import { setupStyles } from './setupStyles';
+import { setCustomProperties } from './set-custom-properties';
 
-export { setupStyles };
+export { setCustomProperties as setupStyles };
 
 export interface ThemeContextProps {
     theme: string;
@@ -35,7 +35,11 @@ export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaul
     }, [theme, themeStyle]);
 
     useEffect(() => {
-        setupStyles({ ref: elementRef, styles: themeStyle });
+        const elementStyle: CSSStyleDeclaration | undefined = elementRef
+            ? elementRef?.current?.style
+            : document?.documentElement?.style;
+
+        setCustomProperties(elementStyle, themeStyle);
     }, [themeStyle, elementRef]);
 
     return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
