@@ -2,7 +2,7 @@ import React, { useEffect, createContext, useMemo, useContext } from 'react';
 
 import { setCustomProperties } from './set-custom-properties';
 
-export { setCustomProperties as setupStyles };
+export { setCustomProperties };
 
 export interface ThemeContextProps {
     theme: string;

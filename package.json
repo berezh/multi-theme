@@ -1,6 +1,6 @@
 {
     "name": "multi-theme",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Path builder",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
