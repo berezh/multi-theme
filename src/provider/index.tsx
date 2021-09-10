@@ -1,5 +1,9 @@
 import React, { useEffect, createContext, useMemo, useContext } from 'react';
 
+import { setupStyles } from './setupStyles';
+
+export { setupStyles };
+
 export interface ThemeContextProps {
     theme: string;
     style: Record<string, string | undefined>;
@@ -31,23 +35,7 @@ export const ThemeProvider: React.FC<Props> = ({ theme, styles, children, defaul
     }, [theme, themeStyle]);
 
     useEffect(() => {
-        const elementStyle: CSSStyleDeclaration | undefined = elementRef
-            ? elementRef?.current?.style
-            : document?.documentElement?.style;
-
-        if (elementStyle) {
-            const styleNames = Object.keys(themeStyle);
-            for (const styleName of styleNames) {
-                const styleValue = themeStyle[styleName];
-                const propertyName = `--${styleName}`;
-
-                if (typeof styleValue === 'string' || typeof styleValue === 'number') {
-                    elementStyle.setProperty(propertyName, styleValue);
-                } else {
-                    elementStyle.removeProperty(propertyName);
-                }
-            }
-        }
+        setupStyles({ ref: elementRef, styles: themeStyle });
     }, [themeStyle, elementRef]);
 
     return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
