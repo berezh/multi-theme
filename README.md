@@ -1,10 +1,15 @@
 # multi-theme
 
+<p>
+    Multi theme solution based on [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+</p>
+
+---
+
 <a href="https://www.npmjs.com/package/multi-theme">
     <img src="https://nodei.co/npm/multi-theme.png?mini=true"/>
 </a>
 
-Multi theme support based on [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
 
 [DEMO](https://varp.com/multi-theme)
 
